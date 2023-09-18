@@ -1,0 +1,41 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://checkout.razorpay.com/v1/razorpay.js"></script>
+</head>
+<body>
+    <button id="btn">Pay</button>
+    <script>
+        var razorpay = new Razorpay({  key: 'rzp_live_jF0ae6CGrfeKlP' });
+        razorpay.getSupportedUpiIntentApps()
+            .then((resp) => {
+                console.log(resp)
+            })
+            .catch((err) => {
+                console.log(err)
+        });
+        var paymentData = {
+            amount: 100, 
+            method: 'upi',
+            contact: '9123456789',  
+            email: 'gaurav.kumar@example.com',  
+            order_id: 'order_MdltT8bj0fSdXX' 
+        };
+        razorpay.createPayment(paymentData, { app: 'phonepe'});
+        razorpay.on('payment.success', function(response) {
+            console.log(response.razorpay_payment_id)
+            console.log(response.razorpay_order_id)
+        });
+        razorpay.on('payment.error', function(error) {
+            console.log(error)
+        });
+    </script>
+</body>
+</html>
